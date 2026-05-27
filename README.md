@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro HTML Studio | Responsive Builder</title>
+    <title>Pro HTML Studio | Premium Builder</title>
     <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,7 +19,7 @@
             --text-muted: #94a3b8;
             --border-color: #334155;
             --success: #10b981;
-            --device-bg: #ffffff;
+            --wa-color: #25D366;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
@@ -87,20 +87,48 @@
             box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
         }
 
-        .header-actions button {
-            background: linear-gradient(135deg, var(--accent-primary), #2563eb);
-            color: white;
+        /* Action Buttons Group */
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
             border: none;
             padding: 8px 16px;
             border-radius: 8px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
-        .header-actions button:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+
+        /* Tombol Create Website (Gradient Purple-Pink) */
+        .btn-create {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Tombol Tutorial (Blue) */
+        .btn-tutorial {
+            background: linear-gradient(135deg, var(--accent-primary), #2563eb);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-tutorial:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
 
         /* --- Main Layout --- */
         .workspace {
@@ -146,78 +174,41 @@
             resize: none;
         }
 
-        /* --- Preview Section (The Magic Happens Here) --- */
+        /* --- Preview Section --- */
         .preview-wrapper {
             width: 50%;
-            background-color: #cbd5e1; /* Light gray bg for contrast */
+            background-color: #cbd5e1;
             display: flex;
             justify-content: center;
-            align-items: center; /* Center the device */
+            align-items: center;
             padding: 20px;
             overflow: auto;
             position: relative;
         }
 
-        /* Container for the iframe that changes size */
         #device-frame {
-            background-color: var(--device-bg);
+            background-color: #ffffff;
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
-            border-radius: 4px; /* Slight radius for desktop */
+            border-radius: 4px;
         }
 
-        /* Desktop Mode (Default) */
-        #device-frame.mode-desktop {
-            width: 100%;
-            height: 100%;
-            border-radius: 0;
-        }
+        #device-frame.mode-desktop { width: 100%; height: 100%; border-radius: 0; }
+        #device-frame.mode-tablet { width: 768px; height: 1024px; max-height: 90%; max-width: 90%; border: 12px solid #333; border-radius: 20px; }
+        #device-frame.mode-mobile { width: 375px; height: 667px; max-height: 90%; border: 12px solid #333; border-radius: 30px; }
 
-        /* Tablet Mode */
-        #device-frame.mode-tablet {
-            width: 768px;
-            height: 1024px; /* Aspect ratio roughly iPad */
-            max-height: 90%;
-            max-width: 90%;
-            border: 12px solid #333;
-            border-radius: 20px;
-        }
-
-        /* Mobile Mode */
-        #device-frame.mode-mobile {
-            width: 375px; /* iPhone SE/X width */
-            height: 667px; 
-            max-height: 90%;
-            border: 12px solid #333;
-            border-radius: 30px;
-        }
-
-        /* Notch simulation for mobile */
+        /* Notch simulation */
         #device-frame.mode-mobile::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40%;
-            height: 20px;
-            background: #333;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            z-index: 10;
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 40%; height: 20px; background: #333;
+            border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; z-index: 10;
         }
 
-        iframe#preview-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-            display: block;
-        }
+        iframe#preview-frame { width: 100%; height: 100%; border: none; background: white; display: block; }
 
-        /* --- Modal Tutorial (Same as before) --- */
+        /* --- Modal Tutorial --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
@@ -246,14 +237,14 @@
 </head>
 <body>
 
-    <!-- Header with Device Switcher -->
+    <!-- Header with Device Switcher & Actions -->
     <header>
         <div class="brand">
             <i class="fa-solid fa-layer-group"></i>
             <span>Pro Studio</span>
         </div>
 
-        <!-- Fitur Baru: Device Switcher -->
+        <!-- Device Switcher -->
         <div class="device-switcher">
             <button class="device-btn active" onclick="setDevice('desktop')" title="Desktop View">
                 <i class="fa-solid fa-desktop"></i>
@@ -266,8 +257,15 @@
             </button>
         </div>
 
+        <!-- Action Buttons -->
         <div class="header-actions">
-            <button onclick="openTutorial()">
+            <!-- Tombol Create Website (Baru) -->
+            <button class="btn btn-create" id="btnCreate" onclick="sendToWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> Create Website Anda
+            </button>
+            
+            <!-- Tombol Tutorial -->
+            <button class="btn btn-tutorial" onclick="openTutorial()">
                 <i class="fa-solid fa-book-open"></i> Tutorial
             </button>
         </div>
@@ -285,7 +283,7 @@
             <textarea id="code-editor" spellcheck="false"></textarea>
         </div>
 
-        <!-- Preview Panel with Resizable Frame -->
+        <!-- Preview Panel -->
         <div class="preview-wrapper">
             <div id="device-frame" class="mode-desktop">
                 <iframe id="preview-frame"></iframe>
@@ -310,8 +308,8 @@
                     Ketik kode HTML di panel kiri. Perubahan akan langsung muncul di "layar HP" jika mode mobile dipilih.
                 </div>
                 <div class="step-item">
-                    <strong>3. Uji Coba CSS</strong><br>
-                    Cobalah buat layout yang fleksibel menggunakan CSS Flexbox atau Grid agar rapi di semua perangkat.
+                    <strong>3. Kirim Hasil</strong><br>
+                    Jika sudah selesai, klik tombol ungu <b>"Create Website Anda"</b> di pojok kanan atas. Kode akan otomatis terkirim ke WhatsApp admin.
                 </div>
             </div>
             <button class="btn-start" onclick="startCoding()">Mengerti, Mulai!</button>
@@ -319,7 +317,7 @@
     </div>
 
     <script>
-        // Default Code with Responsive Example
+        // Default Code
         const defaultCode = `<!DOCTYPE html>
 <html>
 <head>
@@ -331,33 +329,33 @@
             background-color: #f0f9ff;
             text-align: center;
         }
-        .box {
+        .card {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-top: 20px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 50px auto;
         }
-        h1 { color: #0284c7; }
-        
-        /* Contoh Responsive Sederhana */
-        @media (max-width: 600px) {
-            body { background-color: #fff1f2; }
-            h1 { color: #e11d48; font-size: 24px; }
-            .box { border: 2px solid #e11d48; }
+        h1 { color: #3b82f6; }
+        p { color: #64748b; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
-    <h1>Cek Tampilan!</h1>
-    <p>Klik tombol HP di menu atas.</p>
-    
-    <div class="box">
-        <p>Jika latar belakang merah muda, berarti Anda sedang dalam mode Mobile (lebar layar kecil).</p>
-        <p>Jika biru, Anda dalam mode Desktop.</p>
+    <div class="card">
+        <h1>Halo Dunia!</h1>
+        <p>Website ini dibuat dengan Pro HTML Studio.</p>
+        <button onclick="alert('Berhasil!')">Klik Saya</button>
     </div>
-
 </body>
 </html>`;
 
@@ -366,6 +364,7 @@
         const deviceFrame = document.getElementById('device-frame');
         const modal = document.getElementById('tutorialModal');
         const btns = document.querySelectorAll('.device-btn');
+        const btnCreate = document.getElementById('btnCreate');
 
         // Fungsi Update Preview
         function updatePreview() {
@@ -378,22 +377,40 @@
 
         // Fungsi Ganti Device
         function setDevice(type) {
-            // Reset classes
             deviceFrame.className = '';
-            
-            // Add specific class
-            if(type === 'mobile') {
-                deviceFrame.classList.add('mode-mobile');
-            } else if (type === 'tablet') {
-                deviceFrame.classList.add('mode-tablet');
-            } else {
-                deviceFrame.classList.add('mode-desktop');
-            }
+            if(type === 'mobile') deviceFrame.classList.add('mode-mobile');
+            else if (type === 'tablet') deviceFrame.classList.add('mode-tablet');
+            else deviceFrame.classList.add('mode-desktop');
 
-            // Update Active Button State
             btns.forEach(btn => btn.classList.remove('active'));
-            // Cari tombol yang diklik berdasarkan icon class (cara sederhana)
             event.currentTarget.classList.add('active');
+        }
+
+        // --- FUNGSI KIRIM KE WHATSAPP ---
+        function sendToWhatsApp() {
+            const code = editor.value;
+            
+            // Ubah tampilan tombol jadi loading
+            const originalText = btnCreate.innerHTML;
+            btnCreate.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+            
+            setTimeout(() => {
+                // Nomor Tujuan (Format Internasional tanpa +)
+                const phoneNumber = "6285882382854"; 
+                
+                // Membuat pesan
+                const message = `Halo, saya ingin membuat website. Berikut adalah kode HTML yang telah saya buat:\n\n${code}`;
+                
+                // Encode pesan agar aman untuk URL
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Buka WhatsApp
+                const waURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                window.open(waURL, '_blank');
+                
+                // Kembalikan tombol ke semula
+                btnCreate.innerHTML = originalText;
+            }, 800); // Delay sedikit agar terasa ada proses
         }
 
         // Event Listeners
